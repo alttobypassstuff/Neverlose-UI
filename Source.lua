@@ -6256,7 +6256,7 @@ function Neverlose_Main:Window(config)
             MainFrame.Visible = t
         end, {
             {
-                key = Enum.KeyCode.LeftControl,
+                key = Enum.KeyCode.H,
                 Toggled = true
             }
         })
@@ -6290,7 +6290,7 @@ function Neverlose_Main:Window(config)
 
         Neverlose_Main:Notify({
             Title = "Welcome",
-            Text = "Menu Key | LeftControl",
+            Text = "Menu Key | H",
             Time = 2
         })
 
