@@ -4012,8 +4012,22 @@ function Neverlose_Main:Window(config)
                                     DropToggled = false
                                 end)
                             end
+                            -- Adjust the size of the dropdown holder
+                            DropdownHolder.CanvasSize = UDim2.new(0, 0, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
+                            DropdownHolder.Size = UDim2.new(0, 91, 0, DropdownHolderLayout.AbsoluteContentSize.Y)
+                            -- Make the dropdown holder visible
+                            DropdownHolder.Visible = true
+                            DropdownFrameHold.Visible = true
+                            TweenService:Create(
+                                DropdownFrameHold,
+                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
+                                {Size = UDim2.new(0, 257, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)}
+                            ):Play()
+                            -- Update the section size
+                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
                         end
                     end
+                    
                     
 
                     Neverlose_Main.Flags[title] = Dropfunc
