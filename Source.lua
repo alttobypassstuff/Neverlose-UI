@@ -3714,259 +3714,18 @@ function Neverlose_Main:Window(config)
                     Container.CanvasSize = UDim2.new(0, 0, 0, Container.CanvasSize.Y.Offset + UniNum)
                     return linefunc
                 end
-
-                function Elements:Dropdown(title, list, callback)
-                    local Dropfunc, DropToggled = {Value = nil}, false
-
-                    local Dropdown = Instance.new("TextButton")
-                    local DropdownTitle = Instance.new("TextLabel")
-                    local DropdownFrame = Instance.new("Frame")
-                    local DropdownFrameCorner = Instance.new("UICorner")
-                    local Arrow = Instance.new("ImageLabel")
-                    local ItemSelected = Instance.new("TextLabel")
-                    local DropdownFrameHold = Instance.new("Frame")
-                    local DropdownFrameHoldCorner = Instance.new("UICorner")
-                    local DropdownHolder = Instance.new("ScrollingFrame")
-                    local DropdownHolderLayout = Instance.new("UIListLayout")
-
-                    function Dropfunc:visibility(state)
-                        local Trans = nil
-                        for i,v in pairs(Dropdown:GetChildren()) do
-                            if not v:IsA("UICorner") and v.Name ~= "DropdownTitle" then
-                                v.Visible = state
-                            end
+                function Dropfunc:Refresh(newlist)
+                    for i,v in pairs(DropdownHolder:GetChildren()) do
+                        if v:IsA("TextButton") then
+                            v:Destroy()
                         end
-                        if state then
-                            Trans = 0
-                        elseif state == false then
-                            Trans = 1
-                        end
-                        TweenService:Create(
-                            DropdownTitle,
-                            TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                            {TextTransparency = Trans}
-                        ):Play()
-                        task.wait(.3)
-                        Dropdown.Visible = state
-                        TweenService:Create(
-                            Section,
-                            TweenInfo.new(.5, Enum.EasingStyle.Quad),
-                            {Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10)}
-                        ):Play()
                     end
-
-                    Dropdown.Name = title
-                    Dropdown.Parent = Section
-                    Dropdown.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                    Dropdown.BackgroundTransparency = 1.000
-                    Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    Dropdown.BorderSizePixel = 0
-                    Dropdown.Position = UDim2.new(0.0171875004, 0, 0, 0)
-                    Dropdown.Size = UDim2.new(0, 274, 0, 26)
-                    Dropdown.AutoButtonColor = false
-                    Dropdown.Font = Enum.Font.SourceSans
-                    Dropdown.Text = ""
-                    Dropdown.TextColor3 = Color3.fromRGB(0, 0, 0)
-                    Dropdown.TextSize = 14.000
-                    
-                    DropdownTitle.Name = "DropdownTitle"
-                    DropdownTitle.Parent = Dropdown
-                    DropdownTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                    DropdownTitle.BackgroundTransparency = 1.000
-                    DropdownTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    DropdownTitle.BorderSizePixel = 0
-                    DropdownTitle.Position = UDim2.new(0.0355987065, 0, 0.233333334, 0)
-                    DropdownTitle.Size = UDim2.new(0, 49, 0, 15)
-                    DropdownTitle.Font = Enum.Font.Gotham
-                    DropdownTitle.Text = title
-                    DropdownTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-                    DropdownTitle.TextSize = 13.000
-                    DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
-                    
-                    DropdownFrame.Name = "DropdownFrame"
-                    DropdownFrame.Parent = Dropdown
-                    DropdownFrame.BackgroundColor3 = Color3.fromRGB(3, 5, 13)
-                    DropdownFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    DropdownFrame.BorderSizePixel = 0
-                    DropdownFrame.Position = UDim2.new(0.640705884, 0, 0.233333334, 0)
-                    DropdownFrame.Size = UDim2.new(0, 100, 0, 15)
-                    
-                    DropdownFrameCorner.CornerRadius = UDim.new(0, 3)
-                    DropdownFrameCorner.Name = "DropdownFrameCorner"
-                    DropdownFrameCorner.Parent = DropdownFrame
-                    
-                    Arrow.Name = "Arrow"
-                    Arrow.Parent = DropdownFrame
-                    Arrow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                    Arrow.BackgroundTransparency = 1.000
-                    Arrow.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    Arrow.BorderSizePixel = 0
-                    Arrow.Position = UDim2.new(0.790000021, 0, -0.13333334, 0)
-                    Arrow.Size = UDim2.new(0, 18, 0, 18)
-                    Arrow.Image = "http://www.roblox.com/asset/?id=6034818372"
-                    
-                    ItemSelected.Name = "ItemSelected"
-                    ItemSelected.Parent = DropdownFrame
-                    ItemSelected.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                    ItemSelected.BackgroundTransparency = 1.000
-                    ItemSelected.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    ItemSelected.BorderSizePixel = 0
-                    ItemSelected.Position = UDim2.new(0.0700000003, 0, 0.200000003, 0)
-                    ItemSelected.Size = UDim2.new(0, 31, 0, 9)
-                    ItemSelected.Font = Enum.Font.Gotham
-                    ItemSelected.Text = ""
-                    ItemSelected.TextColor3 = Color3.fromRGB(255, 255, 255)
-                    ItemSelected.TextSize = 12.000
-                    ItemSelected.TextXAlignment = Enum.TextXAlignment.Left
-                    
-                    DropdownFrameHold.Name = "DropdownFrameHold"
-                    DropdownFrameHold.Parent = Section
-                    DropdownFrameHold.BackgroundColor3 = Color3.fromRGB(0, 18, 35)
-                    DropdownFrameHold.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    DropdownFrameHold.BorderSizePixel = 0
-                    DropdownFrameHold.Position = UDim2.new(0, 0, 1.06666672, 0)
-                    DropdownFrameHold.Size = UDim2.new(0, 257, 0, 130)
-                    DropdownFrameHold.ZIndex = 7
-                    DropdownFrameHold.Visible = false
-                    DropdownFrameHold.BackgroundTransparency = 1
-                    
-                    DropdownFrameHoldCorner.CornerRadius = UDim.new(0, 3)
-                    DropdownFrameHoldCorner.Name = "DropdownFrameHoldCorner"
-                    DropdownFrameHoldCorner.Parent = DropdownFrameHold
-                    
-                    DropdownHolder.Name = "DropdownHolder"
-                    DropdownHolder.Parent = DropdownFrameHold
-                    DropdownHolder.Active = true
-                    DropdownHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                    DropdownHolder.BackgroundTransparency = 1.000
-                    DropdownHolder.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                    DropdownHolder.BorderSizePixel = 0
-                    DropdownHolder.Size = UDim2.new(1, 0, 1, 0)
-                    DropdownHolder.ScrollBarThickness = 3
-                    DropdownHolder.Visible = false
-                    
-                    DropdownHolderLayout.Name = "DropdownHolderLayout"
-                    DropdownHolderLayout.Parent = DropdownHolder
-                    DropdownHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-                    DropdownHolderLayout.Padding = UDim.new(0, 3)
-
-                    Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10)
-                    Container.CanvasSize = UDim2.new(0, 0, 0, Container.CanvasSize.Y.Offset + UniNum)
-
-                    spawn(function()
-                        while task.wait() do
-                            pcall(function()
-                                ChangeTypeText(DropdownTitle)
-                                Arrow.ImageColor3 = Neverlose_Main.Theme.Custom.Element
-                            end)
-                        end
-                    end)
-
-                    Dropdown.MouseButton1Click:Connect(function()
-                        Neverlose_Main:PlaySound(Neverlose_Main.Lib_Sounds.ClickSound)
-                        if DropToggled == false then
-                            DropdownFrameHold.Visible = true
-                            TweenService:Create(
-                                DropdownFrameHold,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Size = UDim2.new(0, 257, 0, 130)}
-                            ):Play()
-
-                            TweenService:Create(
-                                Arrow,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Rotation = 180}
-                            ):Play()
-
-                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, 130)
-                            DropdownHolder.Visible = true
-                        else
-                            TweenService:Create(
-                                DropdownFrameHold,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Size = UDim2.new(0, 257, 0, 0)}
-                            ):Play()
-                            DropdownHolder.Visible = false
-
-                            TweenService:Create(
-                                Arrow,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Rotation = 0}
-                            ):Play()
-
-                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, 0)
-                            DropdownFrameHold.Visible = false
-                        end
-                        DropToggled = not DropToggled
-                    end)
-
-                    function Dropfunc:Set(val)
-                        Dropfunc.Value = val
-                        ItemSelected.Text = val
-                        return pcall(callback, Dropfunc.Value)
-                    end
-
-                    for i,v in pairs(list) do
-                        local Item = Instance.new("TextButton")
-                        local ItemPadding = Instance.new("UIPadding")
-                        local DropdownHolderPadding = Instance.new("UIPadding")
-
-                        Item.Name = "Item"
-                        Item.Parent = DropdownHolder
-                        Item.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                        Item.BackgroundTransparency = 1.000
-                        Item.BorderColor3 = Color3.fromRGB(0, 0, 0)
-                        Item.BorderSizePixel = 0
-                        Item.Size = UDim2.new(0, 91, 0, 17)
-                        Item.Font = Enum.Font.Gotham
-                        Item.Text = "- "..v
-                        Item.TextColor3 = Color3.fromRGB(255, 255, 255)
-                        Item.TextSize = 14
-                        Item.TextXAlignment = Enum.TextXAlignment.Left
-                        
-                        ItemPadding.Name = "ItemPadding"
-                        ItemPadding.Parent = Item
-                        ItemPadding.PaddingLeft = UDim.new(0, 5)
-                        
-                        DropdownHolderPadding.Name = "DropdownHolderPadding"
-                        DropdownHolderPadding.Parent = DropdownHolder
-                        DropdownHolderPadding.PaddingTop = UDim.new(0, 1)
-
-                        DropdownHolder.CanvasSize = UDim2.new(0, 0, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
-
-                        Item.MouseButton1Click:Connect(function()
-                            Neverlose_Main:PlaySound(Neverlose_Main.Lib_Sounds.ClickSound)
-                            Dropfunc:Set(v)
-                            TweenService:Create(
-                                DropdownFrameHold,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Size = UDim2.new(0, 257, 0, 0)}
-                            ):Play()
-                            DropdownHolder.Visible = false
-
-                            TweenService:Create(
-                                Arrow,
-                                TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Rotation = 0}
-                            ):Play()
-
-                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10)  until DropdownFrameHold.Size == UDim2.new(0, 257, 0, 0)
-                            DropdownFrameHold.Visible = false
-                            DropToggled = false
-                        end)
-                    end
-
-                    function Dropfunc:Refresh(newlist)
-                        for i,v in pairs(DropdownHolder:GetChildren()) do
-                            if v:IsA("TextButton") then
-                                v:Destroy()
-                            end
-                        end
+                    if newlist and #newlist > 0 then
                         for i,v in pairs(newlist) do
                             local Item = Instance.new("TextButton")
                             local ItemPadding = Instance.new("UIPadding")
                             local DropdownHolderPadding = Instance.new("UIPadding")
-    
+                
                             Item.Name = "Item"
                             Item.Parent = DropdownHolder
                             Item.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -3979,15 +3738,15 @@ function Neverlose_Main:Window(config)
                             Item.TextColor3 = Color3.fromRGB(255, 255, 255)
                             Item.TextSize = 14
                             Item.TextXAlignment = Enum.TextXAlignment.Left
-                            
+                
                             ItemPadding.Name = "ItemPadding"
                             ItemPadding.Parent = Item
                             ItemPadding.PaddingLeft = UDim.new(0, 5)
-                            
+                
                             DropdownHolderPadding.Name = "DropdownHolderPadding"
                             DropdownHolderPadding.Parent = DropdownHolder
                             DropdownHolderPadding.PaddingTop = UDim.new(0, 1)
-    
+                
                             Item.MouseButton1Click:Connect(function()
                                 Neverlose_Main:PlaySound(Neverlose_Main.Lib_Sounds.ClickSound)
                                 Dropfunc:Set(v)
@@ -3997,24 +3756,21 @@ function Neverlose_Main:Window(config)
                                     {Size = UDim2.new(0, 257, 0, 0)}
                                 ):Play()
                                 DropdownHolder.Visible = false
-    
+                
                                 TweenService:Create(
                                     Arrow,
                                     TweenInfo.new(.3, Enum.EasingStyle.Quad),
                                     {Rotation = 0}
                                 ):Play()
-    
+                
                                 repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, 0)
                                 DropdownFrameHold.Visible = false
                                 DropToggled = false
                             end)
                         end
                     end
-
-                    Neverlose_Main.Flags[title] = Dropfunc
-                    return Dropfunc
                 end
-
+                
                 function Elements:Slider(title, min, max, start, callback)
                     local Sliderfunc, dragging = {Value = start}, false
 
