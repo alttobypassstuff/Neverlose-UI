@@ -4018,8 +4018,8 @@ function Neverlose_Main:Window(config)
                             -- Adjust the size of the dropdown holder
                             DropdownHolder.CanvasSize = UDim2.new(0, 0, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
                             -- Make the dropdown holder visible
-                            DropdownHolder.Visible = true
-                            DropdownFrameHold.Visible = true
+                            --DropdownHolder.Visible = true
+                            --DropdownFrameHold.Visible = true
                             TweenService:Create(
                                 DropdownFrameHold,
                                 TweenInfo.new(.3, Enum.EasingStyle.Quad),
