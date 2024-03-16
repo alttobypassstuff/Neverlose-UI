@@ -3976,12 +3976,15 @@ function Neverlose_Main:Window(config)
                                 Item.BackgroundTransparency = 1.000
                                 Item.BorderColor3 = Color3.fromRGB(0, 0, 0)
                                 Item.BorderSizePixel = 0
-                                Item.Size = UDim2.new(0, 91, 0, 15)
+                                Item.Size = UDim2.new(1, 0, 0, 20) -- Adjust the height
+                                Item.AutoButtonColor = false
                                 Item.Font = Enum.Font.Gotham
                                 Item.Text = "- "..v
                                 Item.TextColor3 = Color3.fromRGB(255, 255, 255)
                                 Item.TextSize = 14
                                 Item.TextXAlignment = Enum.TextXAlignment.Left
+                                Item.TextWrapped = true -- Allow text wrapping
+                                Item.ClipsDescendants = true -- Clip text within the button boundaries
                     
                                 ItemPadding.Name = "ItemPadding"
                                 ItemPadding.Parent = Item
@@ -4014,19 +4017,19 @@ function Neverlose_Main:Window(config)
                             end
                             -- Adjust the size of the dropdown holder
                             DropdownHolder.CanvasSize = UDim2.new(0, 0, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
-                            DropdownHolder.Size = UDim2.new(0, 91, 0, DropdownHolderLayout.AbsoluteContentSize.Y)
                             -- Make the dropdown holder visible
                             DropdownHolder.Visible = true
                             DropdownFrameHold.Visible = true
                             TweenService:Create(
                                 DropdownFrameHold,
                                 TweenInfo.new(.3, Enum.EasingStyle.Quad),
-                                {Size = UDim2.new(0, 257, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)}
+                                {Size = UDim2.new(0, 257, 0, math.min(DropdownHolderLayout.AbsoluteContentSize.Y + 10, 130))}
                             ):Play()
                             -- Update the section size
-                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, DropdownHolderLayout.AbsoluteContentSize.Y + 10)
+                            repeat task.wait() Section.Size = UDim2.new(0, 285, 0, SectionLayout.AbsoluteContentSize.Y + 10) until DropdownFrameHold.Size == UDim2.new(0, 257, 0, math.min(DropdownHolderLayout.AbsoluteContentSize.Y + 10, 130))
                         end
                     end
+                    
                     
                     
 
